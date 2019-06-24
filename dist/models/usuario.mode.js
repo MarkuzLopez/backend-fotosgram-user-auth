@@ -27,7 +27,6 @@ var usuarioSchema = new mongoose_1.Schema({
 // comparar El password y verficiarlo
 usuarioSchema.method('compararPassword', function (password) {
     if (password === void 0) { password = ''; }
-    // comparar la contraseñla de la funcion con  la almacenada en la BD 
     if (bcrypt_1.default.compareSync(password, this.password)) {
         return true;
     }

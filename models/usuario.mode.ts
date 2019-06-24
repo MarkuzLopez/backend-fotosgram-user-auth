@@ -22,15 +22,15 @@ const usuarioSchema = new Schema({
 });
 
 // comparar El password y verficiarlo
-usuarioSchema.method('compararPassword', function(password: string = ''): boolean {
+usuarioSchema.method('compararPassword', function( password: string = ''): boolean {
 
-    // comparar la contraseñla de la funcion con  la almacenada en la BD 
-    if(bcrypt.compareSync(password, this.password)) {
+    if (  bcrypt.compareSync( password, this.password ) ) {
         return true;
     } else {
         return false;
     }
-})
+
+});
 
 
 interface IUsuario extends Document {
@@ -42,4 +42,6 @@ interface IUsuario extends Document {
     compararPassword(password: string): boolean;
 }
 
-export const Usuario = model<IUsuario>('Usuario', usuarioSchema)
+
+
+export const Usuario = model<IUsuario>('Usuario', usuarioSchema);

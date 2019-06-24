@@ -14,17 +14,14 @@ userRoutes.post('/login', function (req, res) {
     var body = req.body;
     usuario_mode_1.Usuario.findOne({ email: body.email }, function (err, userDB) {
         if (err)
-            throw err; /// ssieexiste error sale y muestra el error
-        // si el usuario no existe mandar el mensaje
+            throw err;
         if (!userDB) {
-            res.json({
-                ok: true,
-                mensaje: 'Ussuario/Contraseña no son correctos'
+            return res.json({
+                ok: false,
+                mensaje: 'Usuario/contraseña no son correctos'
             });
         }
-        // si las contrasseña coinciden y el email entncess genera el token
         if (userDB.compararPassword(body.password)) {
-            // generar el token 
             var tokenUser = token_1.default.getJwtToken({
                 _id: userDB._id,
                 nombre: userDB.nombre,
@@ -37,10 +34,9 @@ userRoutes.post('/login', function (req, res) {
             });
         }
         else {
-            // si las contraseñas coinciden 
             return res.json({
                 ok: false,
-                mensaje: 'Usuario/password no son correctas'
+                mensaje: 'Usuario/contraseña no son correctos ***'
             });
         }
     });
@@ -99,6 +95,14 @@ userRoutes.post('/update', autenticacion_1.verificarToken, function (req, res) {
             ok: true,
             token: tokenUser
         });
+    });
+});
+/// obtener al usuario 
+userRoutes.get('/', [autenticacion_1.verificarToken], function (req, ress) {
+    var usuario = req.usuario;
+    ress.json({
+        ok: true,
+        usuario: usuario
     });
 });
 exports.default = userRoutes;

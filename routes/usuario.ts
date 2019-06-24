@@ -7,26 +7,23 @@ import { verificarToken } from '../middleware/autenticacion';
 const userRoutes = Router();
 
 /// Login
-userRoutes.post('/login', (req: Request, res: Response) => {
-    
+userRoutes.post('/login', (req: Request, res: Response ) => {
+
     const body = req.body;
 
-    Usuario.findOne({email: body.email}, (err, userDB) => {
+    Usuario.findOne({ email: body.email }, ( err, userDB ) => {
 
-        if(err) throw err; /// ssieexiste error sale y muestra el error
+        if ( err ) throw err;
 
-        // si el usuario no existe mandar el mensaje
-        if(!userDB) {
-            res.json({
-                ok: true,
-                mensaje: 'Ussuario/Contraseña no son correctos'
-            });   
+        if ( !userDB ) {
+            return res.json({
+                ok: false,
+                mensaje: 'Usuario/contraseña no son correctos'
+            });
         }
 
-        // si las contrasseña coinciden y el email entncess genera el token
-        if( userDB.compararPassword(body.password))  {
+        if ( userDB.compararPassword( body.password ) ) {
 
-            // generar el token 
             const tokenUser = Token.getJwtToken({
                 _id: userDB._id,
                 nombre: userDB.nombre,
@@ -38,14 +35,17 @@ userRoutes.post('/login', (req: Request, res: Response) => {
                 ok: true,
                 token: tokenUser
             });
+
         } else {
-        // si las contraseñas coinciden 
             return res.json({
                 ok: false,
-                mensaje: 'Usuario/password no son correctas'
-            })
+                mensaje: 'Usuario/contraseña no son correctos ***'
+            });
         }
-    }) 
+
+
+    })
+
 
 });
 
@@ -118,5 +118,17 @@ userRoutes.post('/update', verificarToken, (req: any, res: Response) => {
     })
     
 });
+
+/// obtener al usuario 
+userRoutes.get('/', [verificarToken], (req: any, ress: Response) => {
+    
+    const usuario = req.usuario;
+
+    ress.json({
+        ok: true,
+        usuario
+    })
+
+})
 
 export default userRoutes;

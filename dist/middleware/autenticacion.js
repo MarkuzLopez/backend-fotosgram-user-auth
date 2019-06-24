@@ -7,7 +7,7 @@ var token_1 = __importDefault(require("../classes/token"));
 exports.verificarToken = function (req, res, next) {
     var userToken = req.get('x-token') || '';
     token_1.default.comprobarToken(userToken).then(function (decoded) {
-        console.log('Decodeed', decoded);
+        // console.log('Decodeed', decoded);
         req.usuario = decoded.usuario;
         next();
     }).catch(function (err) {
