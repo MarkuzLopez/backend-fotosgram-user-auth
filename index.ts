@@ -11,8 +11,8 @@ import cors  from 'cors';
 
 const server = new Server();
 
-// Body parser, para las peticiones posst, get, put, delete, REST-FULL.
-server.app.use( bodyParser.urlencoded({extended: true}));
+// Body parser, para las peticiones posst, get, put, delete, REST-FULL. 
+server.app.use( bodyParser.urlencoded({extended: true})); 
 server.app.use(bodyParser.json());
 
 

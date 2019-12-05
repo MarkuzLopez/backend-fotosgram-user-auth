@@ -11,7 +11,7 @@ var usuario_1 = __importDefault(require("./routes/usuario"));
 var post_1 = __importDefault(require("./routes/post"));
 var cors_1 = __importDefault(require("cors"));
 var server = new server_1.default();
-// Body parser, para las peticiones posst, get, put, delete, REST-FULL.
+// Body parser, para las peticiones posst, get, put, delete, REST-FULL. 
 server.app.use(body_parser_1.default.urlencoded({ extended: true }));
 server.app.use(body_parser_1.default.json());
 // fileUpload 
